@@ -7,7 +7,6 @@
   const logoutButton = document.querySelector('#portalLogoutBtn');
   const portalSessionKey = 'sagility-portal-authenticated';
   const portalSessionStartedKey = 'sagility-portal-session-started';
-  const portalSessionDuration = 5 * 60 * 60 * 1000;
   const firebaseConfig = {
     apiKey: 'AIzaSyBAy6P6iU18RjMfamovnptmO0gMRMNhJTc',
     authDomain: 'sagility-notes.firebaseapp.com',
@@ -26,10 +25,28 @@
     sessionStorage.removeItem(portalSessionStartedKey);
   }
 
+  function isSameCalendarDay(firstTimestamp, secondTimestamp) {
+    const firstDate = new Date(firstTimestamp);
+    const secondDate = new Date(secondTimestamp);
+    return firstDate.getFullYear() === secondDate.getFullYear()
+      && firstDate.getMonth() === secondDate.getMonth()
+      && firstDate.getDate() === secondDate.getDate();
+  }
+
+  function getNextDailyLogoutTime() {
+    const logoutTime = new Date();
+    logoutTime.setHours(23, 59, 0, 0);
+    if (logoutTime.getTime() <= Date.now()) {
+      logoutTime.setDate(logoutTime.getDate() + 1);
+    }
+    return logoutTime.getTime();
+  }
+
   function scheduleSessionExpiry() {
     const startedAt = Number(sessionStorage.getItem(portalSessionStartedKey));
-    const remaining = portalSessionDuration - (Date.now() - startedAt);
-    if (!Number.isFinite(startedAt) || remaining <= 0) {
+    const now = Date.now();
+    const remaining = getNextDailyLogoutTime() - now;
+    if (!Number.isFinite(startedAt) || !isSameCalendarDay(startedAt, now) || remaining <= 0) {
       clearPortalSession();
       auth.signOut();
       window.location.reload();
@@ -51,9 +68,12 @@
 
   if (sessionStorage.getItem(portalSessionKey) === 'true') {
     const startedAt = Number(sessionStorage.getItem(portalSessionStartedKey));
-    const sessionIsValid = Number.isFinite(startedAt) && Date.now() - startedAt < portalSessionDuration;
+    const sessionIsValid = Number.isFinite(startedAt) && isSameCalendarDay(startedAt, Date.now());
     if (sessionIsValid) unlockPortal();
-    else clearPortalSession();
+    else {
+      clearPortalSession();
+      auth.signOut();
+    }
   }
 
   logoutButton.addEventListener('click', async () => {
