@@ -18,16 +18,43 @@ function setMessage(text, isError = false) {
   message.classList.toggle('error', isError);
 }
 
+function normalizeProperCaseName(value) {
+  if (value === null || value === undefined) return '';
+  const raw = String(value).trim();
+  if (!raw) return '';
+  return raw
+    .toLowerCase()
+    .replace(/(^|\s|[-/])([a-z0-9])/g, (match, prefix, char) => prefix + char.toUpperCase());
+}
+
 function collectApplicant() {
   const data = Object.fromEntries(new FormData(form).entries());
   delete data.privacyConsent;
+  const normalizedFields = {
+    completeName: normalizeProperCaseName(data.completeName),
+    motherLastName: normalizeProperCaseName(data.motherLastName),
+    motherFirstName: normalizeProperCaseName(data.motherFirstName),
+    motherMiddleName: normalizeProperCaseName(data.motherMiddleName),
+    motherSuffix: normalizeProperCaseName(data.motherSuffix)
+  };
   return {
     ...data,
+    ...normalizedFields,
     source: 'applicant-details-survey',
     privacyConsent: true,
     submittedAt: new Date().toISOString()
   };
 }
+
+const properNameFieldNames = ['completeName', 'motherLastName', 'motherFirstName', 'motherMiddleName', 'motherSuffix'];
+
+properNameFieldNames.forEach((fieldName) => {
+  const field = form.querySelector(`[name="${fieldName}"]`);
+  if (!field) return;
+  field.addEventListener('input', () => {
+    field.value = normalizeProperCaseName(field.value);
+  });
+});
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();

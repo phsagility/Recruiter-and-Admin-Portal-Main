@@ -4808,7 +4808,14 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
 }
 
 .applicant-details-table {
+  --dob-width: 128px;
   min-width: 1500px;
+  table-layout: fixed;
+}
+
+.sent-email-history-scroll {
+  overflow: auto;
+  max-width: 100%;
 }
 
 .applicant-details-table th:nth-child(1),
@@ -4831,6 +4838,13 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
 .applicant-details-table td {
   text-align: center;
   vertical-align: middle;
+  line-height: 1.2;
+}
+
+.applicant-details-table th {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .applicant-details-table td {
@@ -4839,21 +4853,31 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   overflow-wrap: anywhere;
 }
 
+.applicant-details-table th:nth-child(4),
+.applicant-details-table td:nth-child(4) {
+  min-width: 220px;
+  max-width: 220px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
 .applicant-details-table th:nth-child(5),
-.applicant-details-table td:nth-child(5),
-.applicant-details-table th:nth-child(6),
-.applicant-details-table td:nth-child(6),
-.applicant-details-table th:nth-child(9),
-.applicant-details-table td:nth-child(9),
-.applicant-details-table th:nth-child(10),
-.applicant-details-table td:nth-child(10),
-.applicant-details-table th:nth-child(11),
-.applicant-details-table td:nth-child(11) {
-  width: auto;
-  min-width: max-content;
-  max-width: none;
+.applicant-details-table td:nth-child(5) {
+  width: var(--dob-width);
+  min-width: var(--dob-width);
+  max-width: var(--dob-width);
   white-space: nowrap;
   overflow-wrap: normal;
+  text-align: center;
+}
+
+.applicant-details-table th:nth-child(3),
+.applicant-details-table td:nth-child(3) {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+  text-align: center;
 }
 
 .applicant-details-table th:nth-child(6),
@@ -4862,6 +4886,70 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   min-width: 48px;
   max-width: 48px;
   text-align: center;
+}
+
+.applicant-details-table th:nth-child(7),
+.applicant-details-table td:nth-child(7) {
+  width: 170px;
+  min-width: 170px;
+  max-width: 170px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.applicant-details-table th:nth-child(8),
+.applicant-details-table td:nth-child(8) {
+  width: 170px;
+  min-width: 170px;
+  max-width: 170px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.applicant-details-table th:nth-child(9),
+.applicant-details-table td:nth-child(9) {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.applicant-details-table th:nth-child(10),
+.applicant-details-table td:nth-child(10),
+.applicant-details-table th:nth-child(11),
+.applicant-details-table td:nth-child(11) {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.applicant-details-table th:nth-child(12),
+.applicant-details-table td:nth-child(12),
+.applicant-details-table th:nth-child(13),
+.applicant-details-table td:nth-child(13),
+.applicant-details-table th:nth-child(14),
+.applicant-details-table td:nth-child(14),
+.applicant-details-table th:nth-child(15),
+.applicant-details-table td:nth-child(15) {
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.applicant-details-table th:nth-child(16),
+.applicant-details-table td:nth-child(16) {
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .applicant-delete-checkbox {

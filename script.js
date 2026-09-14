@@ -385,18 +385,18 @@ function renderApplicantDetails() {
     <td><input class="applicant-delete-checkbox" type="checkbox" data-record-id="${escapeHistoryHtml(record.id)}" aria-label="Delete applicant details record"></td>
     <td>${index + 1}</td>
     <td>${escapeHistoryHtml(record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '')}</td>
-    <td>${escapeHistoryHtml(record.completeName)}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.completeName))}</td>
     <td>${escapeHistoryHtml(formatApplicantDate(record.dateOfBirth))}</td>
     <td>${escapeHistoryHtml(calculateApplicantAge(record.dateOfBirth))}</td>
-    <td>${escapeHistoryHtml(record.homeAddress)}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.homeAddress))}</td>
     <td>${escapeHistoryHtml(record.personalEmail)}</td>
     <td>${escapeHistoryHtml(formatApplicantMobile(record.mobileNumber))}</td>
     <td>${escapeHistoryHtml(formatApplicantIdentifier(record.tin))}</td>
     <td>${escapeHistoryHtml(formatApplicantIdentifier(record.sss))}</td>
-    <td>${escapeHistoryHtml(record.motherLastName || record.mothersMaidenName)}</td>
-    <td>${escapeHistoryHtml(record.motherFirstName)}</td>
-    <td>${escapeHistoryHtml(record.motherMiddleName)}</td>
-    <td>${escapeHistoryHtml(record.motherSuffix)}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.motherLastName || record.mothersMaidenName))}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.motherFirstName))}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.motherMiddleName))}</td>
+    <td>${escapeHistoryHtml(normalizeProperCaseText(record.motherSuffix))}</td>
     <td>${record.privacyConsent ? 'Consented' : 'Not recorded'}</td>
   </tr>`).join('') : '<tr><td colspan="16">No applicant details found.</td></tr>';
   body.querySelectorAll('.applicant-delete-checkbox').forEach((checkbox) => checkbox.addEventListener('change', updateApplicantDetailsActions));
@@ -465,7 +465,7 @@ function exportApplicantDetails() {
     const dateKey = String(record.submittedAt || '').slice(0, 10);
     return (!from || dateKey >= from) && (!end || dateKey <= end);
   });
-  const rows = records.map((record) => [record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '', record.completeName, formatApplicantDate(record.dateOfBirth), calculateApplicantAge(record.dateOfBirth), record.homeAddress, record.personalEmail, formatApplicantMobile(record.mobileNumber), formatApplicantIdentifier(record.tin), formatApplicantIdentifier(record.sss), record.motherLastName || record.mothersMaidenName, record.motherFirstName, record.motherMiddleName, record.motherSuffix, record.privacyConsent ? 'Consented' : 'Not recorded']);
+  const rows = records.map((record) => [record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '', normalizeProperCaseText(record.completeName), formatApplicantDate(record.dateOfBirth), calculateApplicantAge(record.dateOfBirth), normalizeProperCaseText(record.homeAddress), record.personalEmail, formatApplicantMobile(record.mobileNumber), formatApplicantIdentifier(record.tin), formatApplicantIdentifier(record.sss), normalizeProperCaseText(record.motherLastName || record.mothersMaidenName), normalizeProperCaseText(record.motherFirstName), normalizeProperCaseText(record.motherMiddleName), normalizeProperCaseText(record.motherSuffix), record.privacyConsent ? 'Consented' : 'Not recorded']);
   const csv = [headers, ...rows].map((row) => row.map((value) => `"${String(value || '').replaceAll('"', '""')}"`).join(',')).join('\n');
   const link = document.createElement('a');
   link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
