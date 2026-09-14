@@ -4818,6 +4818,31 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   overflow-wrap: anywhere;
 }
 
+.applicant-details-table th:nth-child(5),
+.applicant-details-table td:nth-child(5),
+.applicant-details-table th:nth-child(6),
+.applicant-details-table td:nth-child(6),
+.applicant-details-table th:nth-child(9),
+.applicant-details-table td:nth-child(9),
+.applicant-details-table th:nth-child(10),
+.applicant-details-table td:nth-child(10),
+.applicant-details-table th:nth-child(11),
+.applicant-details-table td:nth-child(11) {
+  width: auto;
+  min-width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.applicant-details-table th:nth-child(6),
+.applicant-details-table td:nth-child(6) {
+  width: 48px;
+  min-width: 48px;
+  max-width: 48px;
+  text-align: center;
+}
+
 .applicant-delete-checkbox {
   width: 17px;
   height: 17px;

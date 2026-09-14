@@ -386,17 +386,47 @@ function renderApplicantDetails() {
     <td>${index + 1}</td>
     <td>${escapeHistoryHtml(record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '')}</td>
     <td>${escapeHistoryHtml(record.completeName)}</td>
-    <td>${escapeHistoryHtml(record.dateOfBirth)}</td>
+    <td>${escapeHistoryHtml(formatApplicantDate(record.dateOfBirth))}</td>
+    <td>${escapeHistoryHtml(calculateApplicantAge(record.dateOfBirth))}</td>
     <td>${escapeHistoryHtml(record.homeAddress)}</td>
     <td>${escapeHistoryHtml(record.personalEmail)}</td>
-    <td>${escapeHistoryHtml(record.mobileNumber)}</td>
-    <td>${escapeHistoryHtml(record.tin)}</td>
-    <td>${escapeHistoryHtml(record.sss)}</td>
-    <td>${escapeHistoryHtml(record.mothersMaidenName)}</td>
+    <td>${escapeHistoryHtml(formatApplicantMobile(record.mobileNumber))}</td>
+    <td>${escapeHistoryHtml(formatApplicantIdentifier(record.tin))}</td>
+    <td>${escapeHistoryHtml(formatApplicantIdentifier(record.sss))}</td>
+    <td>${escapeHistoryHtml(record.motherLastName || record.mothersMaidenName)}</td>
+    <td>${escapeHistoryHtml(record.motherFirstName)}</td>
+    <td>${escapeHistoryHtml(record.motherMiddleName)}</td>
+    <td>${escapeHistoryHtml(record.motherSuffix)}</td>
     <td>${record.privacyConsent ? 'Consented' : 'Not recorded'}</td>
-  </tr>`).join('') : '<tr><td colspan="12">No applicant details found.</td></tr>';
+  </tr>`).join('') : '<tr><td colspan="16">No applicant details found.</td></tr>';
   body.querySelectorAll('.applicant-delete-checkbox').forEach((checkbox) => checkbox.addEventListener('change', updateApplicantDetailsActions));
   updateApplicantDetailsActions();
+}
+
+function formatApplicantDate(value) {
+  const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[2]}/${match[3]}/${match[1]}` : String(value || '');
+}
+
+function formatApplicantIdentifier(value) {
+  return String(value || '').replace(/-/g, '');
+}
+
+function formatApplicantMobile(value) {
+  const normalized = String(value || '').replace(/[\s()-]/g, '');
+  return normalized.replace(/^\+63(9\d{9})$/, '0$1');
+}
+
+function calculateApplicantAge(value) {
+  const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return '';
+  const birthDate = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const birthdayHasPassed = today.getMonth() > birthDate.getMonth()
+    || (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+  if (!birthdayHasPassed) age -= 1;
+  return age >= 0 ? String(age) : '';
 }
 
 function updateApplicantDetailsActions() {
@@ -418,13 +448,13 @@ function initializeApplicantDetails() {
       renderApplicantDetails();
       document.querySelector('#applicantDetailsStatus').textContent = `${applicantDetailsRecords.length} applicant record${applicantDetailsRecords.length === 1 ? '' : 's'} loaded.`;
     }, () => {
-      body.innerHTML = '<tr><td colspan="12">Applicant details unavailable. Check Firebase Firestore rules.</td></tr>';
+      body.innerHTML = '<tr><td colspan="16">Applicant details unavailable. Check Firebase Firestore rules.</td></tr>';
     });
-  }).catch(() => { body.innerHTML = '<tr><td colspan="12">Applicant details unavailable. Enable Firebase anonymous sign-in.</td></tr>'; });
+  }).catch(() => { body.innerHTML = '<tr><td colspan="16">Applicant details unavailable. Enable Firebase anonymous sign-in.</td></tr>'; });
 }
 
 function exportApplicantDetails() {
-  const headers = ['Submitted', 'Complete Name', 'Date of Birth', 'Home Address', 'Personal Email', 'Mobile Number', 'TIN', 'SSS', "Mother's Maiden Name", 'Privacy Consent'];
+  const headers = ['Submitted', 'Complete Name', 'Date of Birth', 'Age', 'Home Address', 'Personal Email', 'Mobile Number', 'TIN', 'SSS', "Mother's Maiden Last Name", "Mother's Maiden First Name", "Mother's Maiden Middle Name", "Mother's Maiden Suffix", 'Privacy Consent'];
   const from = document.querySelector('#applicantExportStart')?.value || '';
   const end = document.querySelector('#applicantExportEnd')?.value || '';
   if (from && end && from > end) {
@@ -435,7 +465,7 @@ function exportApplicantDetails() {
     const dateKey = String(record.submittedAt || '').slice(0, 10);
     return (!from || dateKey >= from) && (!end || dateKey <= end);
   });
-  const rows = records.map((record) => [record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '', record.completeName, record.dateOfBirth, record.homeAddress, record.personalEmail, record.mobileNumber, record.tin, record.sss, record.mothersMaidenName, record.privacyConsent ? 'Consented' : 'Not recorded']);
+  const rows = records.map((record) => [record.submittedAt ? new Date(record.submittedAt).toLocaleString() : '', record.completeName, formatApplicantDate(record.dateOfBirth), calculateApplicantAge(record.dateOfBirth), record.homeAddress, record.personalEmail, formatApplicantMobile(record.mobileNumber), formatApplicantIdentifier(record.tin), formatApplicantIdentifier(record.sss), record.motherLastName || record.mothersMaidenName, record.motherFirstName, record.motherMiddleName, record.motherSuffix, record.privacyConsent ? 'Consented' : 'Not recorded']);
   const csv = [headers, ...rows].map((row) => row.map((value) => `"${String(value || '').replaceAll('"', '""')}"`).join(',')).join('\n');
   const link = document.createElement('a');
   link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
