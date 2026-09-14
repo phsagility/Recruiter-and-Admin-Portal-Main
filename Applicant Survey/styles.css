@@ -1,0 +1,66 @@
+:root { --forest:#203a7a; --deep-green:#14295c; --green:#4d7cff; --mint:#e8f0ff; --lime:#9dd4f2; --paper:#fbfaf4; --ink:#1e2e52; --muted:#64759a; --line:#d8e3f0; --shadow:0 24px 80px rgba(20,45,100,.16); }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; min-width:320px; color:var(--ink); background:#2c78bd; font-family:'DM Sans',sans-serif; line-height:1.5; overflow-x:hidden; }
+body::before { content:''; position:fixed; inset:0; z-index:-3; background:linear-gradient(125deg,#103b73,#2c78bd 48%,#9dd4f2); }
+.shape { position:fixed; z-index:-2; pointer-events:none; opacity:.75; }
+.shape-one { width:46vw; height:46vw; max-width:620px; max-height:620px; top:-20vw; right:-10vw; background:rgba(166,220,247,.62); transform:rotate(22deg); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); }
+.shape-two { width:34vw; height:34vw; bottom:-14vw; left:-8vw; background:rgba(12,54,105,.48); transform:rotate(14deg); clip-path:polygon(0 0,100% 20%,80% 100%,20% 80%); }
+.page-shell { width:min(920px,calc(100% - 40px)); margin:0 auto; padding:74px 0 90px; }
+.intro { width:min(580px,100%); color:white; padding:0 0 44px 7px; }
+.survey-logo { display:block; width:min(220px,60vw); height:auto; margin:0 0 26px; object-fit:contain; object-position:left center; filter:brightness(0) invert(1); }
+.eyebrow { display:flex; align-items:center; gap:9px; text-transform:uppercase; letter-spacing:.16em; font-size:11px; font-weight:700; opacity:.78; }
+.eyebrow-dot,.status-dot { width:8px; height:8px; border-radius:50%; background:var(--lime); display:inline-block; }
+h1 { font-family:Manrope,sans-serif; font-size:clamp(48px,7vw,86px); line-height:.94; letter-spacing:-.05em; margin:20px 0 24px; }
+h1 em { color:var(--lime); font-style:normal; }
+.intro p { max-width:490px; margin:0; color:rgba(255,255,255,.82); font-size:16px; }
+.intro-meta { display:flex; align-items:center; gap:8px; margin-top:22px; color:rgba(255,255,255,.7); font-size:12px; }
+.survey-card { background:var(--paper); border-radius:24px; padding:clamp(24px,5vw,60px); box-shadow:var(--shadow); }
+.survey-progress { display:flex; justify-content:space-between; gap:15px; padding-bottom:25px; border-bottom:1px solid var(--line); color:var(--muted); font-size:14px; }
+fieldset { border:0; padding:0; margin:0; } legend { display:block; width:100%; padding:0; margin-bottom:20px; font-family:Manrope,sans-serif; font-weight:700; font-size:21px; }
+.question-number { display:inline-flex; align-items:center; justify-content:center; width:27px; height:27px; margin-right:8px; border-radius:50%; background:var(--mint); color:var(--forest); font:700 11px 'DM Sans',sans-serif; vertical-align:2px; }
+.required { color:#d35849; }
+.form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px 16px; }
+.text-label { display:block; margin-bottom:0; font-weight:700; font-size:15px; }
+.full-width { grid-column:1 / -1; }
+input[type=text],input[type=email],input[type=tel],input[type=date],textarea { width:100%; margin-top:8px; border:1px solid var(--line); border-radius:10px; padding:14px 15px; background:white; color:var(--ink); font:16px 'DM Sans',sans-serif; outline:none; }
+textarea { resize:vertical; }
+input:focus,textarea:focus { border-color:var(--green); box-shadow:0 0 0 3px rgba(77,124,255,.13); }
+.privacy-panel { margin-top:34px; padding:22px; border:1px solid #a8c6ff; border-radius:14px; background:#e8f0ff; }
+.privacy-heading { display:flex; gap:12px; align-items:flex-start; }
+.privacy-heading strong { color:var(--forest); }
+.privacy-heading p { margin:3px 0 0; color:var(--muted); font-size:15px; }
+.privacy-icon { width:24px; height:24px; flex:0 0 auto; display:grid; place-items:center; border-radius:50%; color:white; background:var(--green); font-weight:800; }
+.privacy-consent { display:flex; align-items:flex-start; gap:10px; margin-top:18px; color:var(--ink); font-size:15px; cursor:pointer; }
+.privacy-consent input { width:17px; height:17px; margin:1px 0 0; flex:0 0 auto; accent-color:var(--green); }
+.form-actions { display:flex; justify-content:flex-end; align-items:center; gap:13px; padding-top:34px; }
+button { font:inherit; }
+.secondary-button,.submit-button { min-height:47px; padding:0 20px; border-radius:9px; font-weight:700; cursor:pointer; }
+.secondary-button { border:1px solid var(--line); color:var(--ink); background:transparent; }
+.secondary-button:hover { background:var(--mint); }
+.submit-button { display:inline-flex; align-items:center; gap:20px; border:0; color:white; background:var(--forest); }
+.submit-button:hover { background:#173d85; }
+.submit-button:disabled { opacity:.7; cursor:wait; }
+.form-message { min-height:22px; margin:14px 0 0; text-align:right; color:var(--green); font-size:13px; }
+.form-message.error { color:#c14e43; }
+@media (max-width:700px) { .page-shell { width:min(100% - 24px,620px); padding:36px 0 50px; } .intro { padding:0 8px 30px; } .survey-card { border-radius:18px; padding:22px 17px; } .survey-progress { font-size:10px; } .form-grid { grid-template-columns:1fr; } .full-width { grid-column:auto; } .form-actions { justify-content:stretch; } .secondary-button,.submit-button { flex:1; justify-content:center; padding:0 12px; } }
+
+@media (max-width:420px) {
+	.page-shell { width:calc(100% - 20px); padding-top:26px; }
+	.intro { padding-right:4px; padding-left:4px; }
+	.survey-logo { width:min(180px,62vw); margin-bottom:20px; }
+	h1 { font-size:clamp(43px, 15vw, 58px); margin-top:16px; }
+	.intro p { font-size:16px; }
+	.survey-card { padding:19px 14px; }
+	.survey-progress { align-items:flex-start; flex-direction:column; gap:6px; padding-bottom:18px; font-size:14px; }
+	legend { font-size:21px; }
+	.text-label { font-size:15px; }
+	input[type=text],input[type=email],input[type=tel],input[type=date],textarea { font-size:16px; padding:14px 15px; }
+	.privacy-panel { padding:16px; }
+	.privacy-heading p { font-size:15px; }
+	.privacy-consent { font-size:15px; line-height:1.5; }
+	.secondary-button,.submit-button { min-height:52px; font-size:16px; }
+	.form-actions { flex-direction:column-reverse; }
+	.secondary-button,.submit-button { width:100%; flex:0 0 auto; }
+	.form-message { text-align:left; }
+}

@@ -35,6 +35,7 @@
       <p class="header-credit">Created by Richiel Caña</p>
     </div>
     <nav class="header-resource-nav" aria-label="Sagility resources">
+      <a href="Applicant%20Survey/index.html" target="_blank" rel="noopener noreferrer">Applicant Details Survey</a>
       <a href="https://assessmentportal.sagilife.online/notes.html" target="_blank" rel="noopener noreferrer">Sagi Notes</a>
       <a href="https://sagilityassessment-cmyk.github.io/Catch-Up-En-Route-Videos_Sagility/" target="_blank" rel="noopener noreferrer">En-Route Videos</a>
       <a href="https://sagilityassessment-cmyk.github.io/sagilityhiringfiles/home.html" target="_blank" rel="noopener noreferrer">Sagility Hiring File</a>
@@ -234,7 +235,7 @@
     </div>
     <div class="sent-email-history-scroll">
       <table class="sent-email-history-table">
-        <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Contact Number</th><th>Account</th><th>Account Subprocess</th><th>Recruiter</th><th>Start Date</th><th>Position</th><th>Location</th><th>Date and Time</th><th>View</th><th>Delete</th></tr></thead>
+        <thead><tr><th>Delete</th><th>View</th><th>#</th><th>Name</th><th>Email</th><th>Contact Number</th><th>Account</th><th>Account Subprocess</th><th>Recruiter</th><th>Start Date</th><th>Position</th><th>Location</th><th>Date and Time</th></tr></thead>
         <tbody id="sentEmailHistoryBody"><tr><td colspan="13">Loading sent email history...</td></tr></tbody>
       </table>
     </div>
@@ -267,6 +268,18 @@
       <button id="toggleHistoryTrendBtn" class="typing-chart-toggle" type="button" aria-expanded="false" aria-controls="historyTrendCharts">Show graph</button>
     </div>
     <div id="historyTrendCharts" class="history-trend-charts typing-results-chart is-collapsed" aria-label="History sent emails by location and account"></div>
+  </section>
+  <div class="applicant-details-results-link"><a class="export-data-btn" href="#applicantDetailsSection">Applicant Details Results</a></div>
+  <section class="card applicant-details-section" id="applicantDetailsSection">
+    <div class="card-header">
+      <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+      <div><h2>Applicant Details</h2><p class="packages-subtitle">Details submitted through the applicant survey.</p></div>
+    </div>
+    <div class="applicant-details-toolbar"><input id="applicantDetailsSearch" type="search" placeholder="Search name, email, or TIN" aria-label="Search applicant details"><button id="refreshApplicantDetailsBtn" class="export-data-btn" type="button">Refresh</button></div>
+    <div class="sent-email-history-scroll"><table class="sent-email-history-table applicant-details-table"><thead><tr><th>Delete</th><th>#</th><th>Submitted</th><th>Complete Name</th><th>Date of Birth</th><th>Home Address</th><th>Personal Email</th><th>Mobile Number</th><th>TIN</th><th>SSS</th><th>Mother's Maiden Name</th><th>Privacy Consent</th></tr></thead><tbody id="applicantDetailsBody"><tr><td colspan="12">Loading applicant details...</td></tr></tbody></table></div>
+    <div class="applicant-details-actions"><button id="selectAllApplicantDetailsBtn" class="history-select-all" type="button">Select All</button><button id="deleteSelectedApplicantDetailsBtn" class="history-delete-selected" type="button" disabled>Delete</button></div>
+    <div class="applicant-details-export"><label for="applicantExportStart">From</label><input id="applicantExportStart" type="date"><label for="applicantExportEnd">End</label><input id="applicantExportEnd" type="date"><button id="exportApplicantDetailsBtn" class="export-data-btn" type="button">Export CSV</button></div>
+    <p id="applicantDetailsStatus" class="history-delete-status" role="status" aria-live="polite"></p>
   </section>
   <div id="esignModal" class="esign-modal" hidden>
     <div class="esign-modal-content">

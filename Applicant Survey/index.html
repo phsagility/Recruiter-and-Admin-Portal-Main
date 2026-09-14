@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#103f32">
+  <title>Applicant Details | Sagility</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script defer src="applicant-survey.js"></script>
+</head>
+<body>
+  <div class="shape shape-one" aria-hidden="true"></div>
+  <div class="shape shape-two" aria-hidden="true"></div>
+  <main class="page-shell">
+    <header class="intro">
+      <img class="survey-logo" src="../logo.png" alt="Sagility">
+      <h1>Applicant<br><em>Details</em></h1>
+      <p>Please complete the form below.</p>
+      <div class="intro-meta"><span class="status-dot" id="connectionDot"></span><span id="connectionStatus">Preparing secure submission...</span></div>
+    </header>
+
+    <form id="applicantForm" class="survey-card">
+      <div class="survey-progress"><span>Applicant information</span><span>Required fields marked *</span></div>
+      <fieldset>
+        <legend><span class="question-number">01</span> Applicant details</legend>
+        <div class="form-grid">
+          <label class="text-label">Complete Name <span class="required">*</span><input name="completeName" type="text" autocomplete="name" required></label>
+          <label class="text-label">Date of Birth <span class="required">*</span><input name="dateOfBirth" type="date" autocomplete="bday" required></label>
+          <label class="text-label full-width">Home Address <span class="required">*</span><textarea name="homeAddress" rows="2" autocomplete="street-address" required></textarea></label>
+          <label class="text-label">Personal Email <span class="required">*</span><input name="personalEmail" type="email" autocomplete="email" required></label>
+          <label class="text-label">Mobile Number <span class="required">*</span><input name="mobileNumber" type="tel" autocomplete="tel" required></label>
+          <label class="text-label">TIN <span class="required">*</span><input name="tin" type="text" inputmode="numeric" required></label>
+          <label class="text-label">SSS <span class="required">*</span><input name="sss" type="text" inputmode="numeric" required></label>
+          <label class="text-label full-width">Mother's Maiden Name <span class="required">*</span><input name="mothersMaidenName" type="text" required></label>
+        </div>
+      </fieldset>
+
+      <section class="privacy-panel">
+        <div class="privacy-heading"><span class="privacy-icon" aria-hidden="true">i</span><div><strong>Data privacy notice</strong><p>Your information will be used by Sagility for recruitment, pre-employment processing, and related employment requirements.</p></div></div>
+        <label class="privacy-consent"><input name="privacyConsent" type="checkbox" required><span>I have read and consent to the collection and processing of my personal data for the purposes stated above. <span class="required">*</span></span></label>
+      </section>
+
+      <div class="form-actions"><button type="reset" id="startOver" class="secondary-button">Clear form</button><button type="submit" class="submit-button"><span>Submit details</span><span aria-hidden="true">↗</span></button></div>
+      <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+</body>
+</html>
