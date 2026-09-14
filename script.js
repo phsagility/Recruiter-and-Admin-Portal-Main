@@ -670,7 +670,7 @@ async function loadPackageForms() {
 
 refreshCheckboxCollections();
 const preEmploymentEmailEndpoint = 'https://script.google.com/macros/s/AKfycbwY-ASlmGJWQMtPcABtsoXuRCwFED3TiwQh05j2XFpX6o1ebs-bTqm6l_jirmE4G14/exec';
-const additionalPreEmploymentEmailEndpoint = 'https://script.google.com/macros/s/AKfycbwjDa8Oc9UsI2uIcDBEWs2Nq9TScg80xwoG-iiIFgK1AsC_x20bklS8SnvMF09mUjUFjw/exec';
+const additionalPreEmploymentEmailEndpoint = 'https://script.google.com/macros/s/AKfycbxnRDA410e-LJHUaOF0d1LOIfLFyLDltaZnbISd-rKRhZkiwkp4vY10N_k5V6-eTUGmqw/exec';
 const medicalEmailEndpoint = 'https://script.google.com/macros/s/AKfycby0GuvNfqRGmJCHKvj9Xq7ch6pRDiQNrwQU4kzGkjA5fLVy1muvetx_8KoApOxkhOxH/exec';
 const publicPortalBaseUrl = 'https://phsagility.github.io/Recruiter-and-Admin-Portal';
 const deployedPortalBaseUrl = window.location.protocol === 'http:' || window.location.protocol === 'https:'

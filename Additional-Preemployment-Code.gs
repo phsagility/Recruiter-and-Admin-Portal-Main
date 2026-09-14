@@ -12,7 +12,6 @@ const PAGIBIG_LINK = 'https://www.pagibigfundservices.com/virtualpagibig/OnlineM
 const NBI_FIRST_TIME_LINK = 'https://firsttimejobseekers.nbi.gov.ph/';
 const NBI_RENEWAL_LINK = 'https://clearance.nbi.gov.ph/';
 const WORKDAY_LINK = 'https://sagility.wd1.myworkdayjobs.com/en-US/PHP_Bulk_Hiring_Job_Posting/login';
-const UNIONBANK_GUIDE_LINK = 'https://drive.google.com/file/d/1ta9KpGjiflU3Xo62wgPGvIM3Yyn_xVCu/view?usp=drive_link';
 const TEAMS_ASSISTANCE_LINK = 'https://teams.microsoft.com/meet/455947232368335?p=bI6X6MhmISHL6eBoCW';
 
 function doGet() {
@@ -70,11 +69,6 @@ function doPost(e) {
       '',
       `You may submit your documents through this email below for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (WD log-in here): ${WORKDAY_LINK}`,
       '',
-      'II. UNION BANK ONLINE ACCOUNT',
-      '',
-      'UnionBank Account Setup',
-      `Your UnionBank account processing will be facilitated after you begin training. The reference code will be shared with you once you have started your training. Please use this guide to ensure a smooth account opening process once you have your reference number: ACCOUNT OPENING GUIDE- ${UNIONBANK_GUIDE_LINK}`,
-      '',
       'Need Assistance?',
       "If you have any questions, concerns, or clarifications, please don't hesitate to reach out. You may:",
       '📧 Reply directly to this email (all requirements or other assistance):',
@@ -118,9 +112,6 @@ function doPost(e) {
         `&#11088; First time Job Seekers, use this link to apply &#10132; ${htmlLink('link', NBI_FIRST_TIME_LINK)}<br>` +
         `&#11088; For Online Renewal click here &#10132; ${htmlLink('link', NBI_RENEWAL_LINK)}</p>`,
       `<p>You may submit your documents through this email thread for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (${htmlLink('WD log-in here', WORKDAY_LINK)}).</p>`,
-      '<p><strong style="color:#00a99d;">II. UNION BANK ONLINE ACCOUNT</strong></p>',
-      '<p><strong>UnionBank Account Setup</strong><br>' +
-        `Your UnionBank account processing will be facilitated after you begin training. The reference code will be shared with you once you have started your training. Please use this guide to ensure a smooth account opening process once you have your reference number - <strong>ACCOUNT OPENING GUIDE- ${htmlLink('LINK', UNIONBANK_GUIDE_LINK)}</strong></p>`,
       '<p><strong>Need Assistance?</strong><br>' +
         "If you have any questions, concerns, or clarifications, please don't hesitate to reach out. You may:<br>" +
         '&#128231; Reply directly to this email below (all requirements or assistance)<br>' +
