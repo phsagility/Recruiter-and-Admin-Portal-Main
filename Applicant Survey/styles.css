@@ -64,3 +64,9 @@ button { font:inherit; }
 	.secondary-button,.submit-button { width:100%; flex:0 0 auto; }
 	.form-message { text-align:left; }
 }
+
+@media (max-width:700px) {
+	.date-of-birth-field {
+		width: 50%;
+	}
+}
