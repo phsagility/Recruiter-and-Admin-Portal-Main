@@ -43,7 +43,7 @@ function doPost(e) {
         : '';
     const links = packages.map((item, index) => `${index + 1}. ${item.name}: ${item.link}`).join('\n');
     const htmlLinks = packages.map((item, index) => `<p>${index + 1}. <strong>${escapeHtml(item.name)}:</strong> <a href="${escapeHtml(item.link)}">Click Here</a></p>`).join('');
-    const subject = `Sagility Pre-Employment Forms_${name}_${location}`;
+    const subject = `Sagility Pre-Employment Forms - ${name} - ${location}`;
     const body = [
       `Hi ${name},`,
       '',
@@ -91,7 +91,7 @@ function doPost(e) {
     MailApp.sendEmail({
       to: recipients,
       replyTo,
-      name: 'sagilityeforms',
+      name: 'sagilitypheforms',
       subject,
       body,
       htmlBody
