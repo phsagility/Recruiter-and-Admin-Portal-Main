@@ -27,8 +27,8 @@ function doPost(e) {
     const recruiter = String(data.recruiter || '').trim();
     const packages = Array.isArray(data.packages) ? data.packages : [];
 
-    if (!name || !email || !location || !recruiter || !packages.length) {
-      throw new Error('Name, email, location, recruiter, and at least one pre-employment package are required.');
+    if (!name || !email || !location || !recruiter) {
+      throw new Error('Name, email, location, and recruiter are required.');
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       throw new Error('Invalid candidate email address.');

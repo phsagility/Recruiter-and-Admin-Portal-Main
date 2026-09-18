@@ -697,6 +697,7 @@ const roleInput = document.querySelector('#roleInput');
 const requestedPackageInput = document.querySelector('#requestedPackageInput');
 const sendEmailButton = document.querySelector('#sendEmailBtn');
 const emailStatus = document.querySelector('#emailStatus');
+const preEmploymentRequirementsCheckbox = document.querySelector('#preEmploymentRequirementsCheckbox');
 const esignModal = document.querySelector('#esignModal');
 const esignFrame = document.querySelector('#esignFrame');
 const closeEsignButton = document.querySelector('#closeEsign');
@@ -1022,17 +1023,29 @@ function applyProperCaseToInput(input) {
 
 function updateSelectedPackages() {
   const selected = checkboxes.filter((checkbox) => checkbox.checked);
-  selectedContainer.innerHTML = selected.length
-    ? selected.map((checkbox) => `
-      <div class="pkg ${checkbox.dataset.prefill === 'medical' ? `medical-${checkbox.dataset.medicalColumn || 'purple'}` : 'blue'}">
-        <div class="pkg-name"><span class="pkg-check" aria-hidden="true">✓</span><span class="pkg-link">${checkbox.dataset.package}</span></div>
-        <button class="pkg-remove" type="button" data-package="${checkbox.dataset.package}" aria-label="Remove ${checkbox.dataset.package}">✕</button>
+  const selectedItems = [
+    ...(preEmploymentRequirementsCheckbox?.checked ? [{ requirements: true, name: 'Pre Employment Requirements' }] : []),
+    ...selected.map((checkbox) => ({ checkbox, name: checkbox.dataset.package }))
+  ];
+  selectedContainer.innerHTML = selectedItems.length
+    ? selectedItems.map((item) => item.requirements
+      ? `
+      <div class="pkg requirements-pink">
+        <div class="pkg-name"><span class="pkg-check" aria-hidden="true">✓</span><span class="pkg-link">${item.name}</span></div>
+        <button class="pkg-remove" type="button" data-requirements="true" aria-label="Remove ${item.name}">✕</button>
+      </div>
+    `
+      : `
+      <div class="pkg ${item.checkbox.dataset.prefill === 'medical' ? `medical-${item.checkbox.dataset.medicalColumn || 'purple'}` : 'blue'}">
+        <div class="pkg-name"><span class="pkg-check" aria-hidden="true">✓</span><span class="pkg-link">${item.name}</span></div>
+        <button class="pkg-remove" type="button" data-package="${item.name}" aria-label="Remove ${item.name}">✕</button>
       </div>
     `).join('')
     : '<p class="no-packages">No packages selected</p>';
-  if (clearButton) clearButton.disabled = selected.length === 0;
-  sendEmailButton.disabled = selected.length === 0;
+  if (clearButton) clearButton.disabled = selected.length === 0 && !preEmploymentRequirementsCheckbox?.checked;
+  sendEmailButton.disabled = selected.length === 0 && !preEmploymentRequirementsCheckbox?.checked;
   checkboxes.forEach(updatePackageItemUI);
+  preEmploymentRequirementsCheckbox?.closest('.package-item')?.classList.toggle('checked', preEmploymentRequirementsCheckbox.checked);
 }
 
 function saveSelectedPackageState() {
@@ -1146,7 +1159,10 @@ function updateRequiredFieldState() {
       requiredPortalInputs.includes(input) && !input.value.trim()
     );
   });
-  document.querySelector('.selected-packages-card')?.classList.toggle('field-invalid', !checkboxes.some((checkbox) => checkbox.checked));
+  document.querySelector('.selected-packages-card')?.classList.toggle(
+    'field-invalid',
+    !checkboxes.some((checkbox) => checkbox.checked) && !preEmploymentRequirementsCheckbox?.checked
+  );
 }
 
  [...baseRequiredPortalInputs, ...medicalRequiredPortalInputs].forEach((input) => {
@@ -1191,9 +1207,21 @@ document.addEventListener('change', (event) => {
   saveSelectedPackageState();
   savePortalState();
 });
+preEmploymentRequirementsCheckbox?.addEventListener('change', () => {
+  updateSelectedPackages();
+  updateRequiredFieldState();
+  savePortalState();
+});
 selectedContainer?.addEventListener('click', (event) => {
   const removeButton = event.target.closest('.pkg-remove');
   if (!removeButton) return;
+  if (removeButton.dataset.requirements) {
+    if (preEmploymentRequirementsCheckbox) preEmploymentRequirementsCheckbox.checked = false;
+    updateSelectedPackages();
+    updateRequiredFieldState();
+    savePortalState();
+    return;
+  }
   const checkbox = checkboxes.find((item) => item.dataset.package === removeButton.dataset.package);
   if (checkbox) checkbox.checked = false;
   updateSelectedPackages();
@@ -1203,6 +1231,7 @@ selectedContainer?.addEventListener('click', (event) => {
 });
 clearButton?.addEventListener('click', () => {
   checkboxes.forEach((checkbox) => { checkbox.checked = false; });
+  if (preEmploymentRequirementsCheckbox) preEmploymentRequirementsCheckbox.checked = false;
   updateSelectedPackages();
   saveSelectedPackageState();
   savePortalState();
@@ -1243,6 +1272,7 @@ sendEmailButton?.addEventListener('click', async () => {
   const role = roleInput.selectedOptions[0]?.textContent.trim() || roleInput.value;
   const requestedPackage = requestedPackageInput.value;
   const recruiter = recruiterInput.value;
+  const sendPreEmploymentRequirements = Boolean(preEmploymentRequirementsCheckbox?.checked);
   const selectedPreEmploymentCheckboxes = preEmploymentCheckboxes.filter((checkbox) => checkbox.checked);
   const selectedMedicalCheckboxes = medicalCheckboxes.filter((checkbox) => checkbox.checked);
   const buildPortalLink = (relativeLink) => new URL(relativeLink, `${portalBaseUrl}/`);
@@ -1265,7 +1295,7 @@ sendEmailButton?.addEventListener('click', async () => {
   const medicalFieldsRequired = selectedMedicalCheckboxes.length > 0;
   const missingCommonFields = !name || !email || !location || !account || !accountSubprocess || !recruiter;
   const missingMedicalFields = medicalFieldsRequired && (!contactNumber || !dateOfIssuance || !medicalExamDate || !role || !requestedPackage);
-  if (missingCommonFields || missingMedicalFields || (!packages.length && !selectedMedicalCheckboxes.length)) {
+  if (missingCommonFields || missingMedicalFields || (!packages.length && !selectedMedicalCheckboxes.length && !sendPreEmploymentRequirements)) {
     updateRequiredFieldState();
     emailStatus.textContent = medicalFieldsRequired
       ? 'Complete name, email, contact number, location, recruiter, account, account subprocess, date of issuance, medical examination date, role, requested package, and package selection.'
@@ -1329,7 +1359,7 @@ sendEmailButton?.addEventListener('click', async () => {
     };
     const queueTypes = [
       packages.length ? 'Forms' : '',
-      packages.length ? 'Sending Requirements' : '',
+      sendPreEmploymentRequirements ? 'Sending Requirements' : '',
       selectedMedicalCheckboxes.length ? 'Medical' : ''
     ].filter(Boolean).join(', ');
     enqueueEmailJob(async () => {
@@ -1340,6 +1370,8 @@ sendEmailButton?.addEventListener('click', async () => {
         } catch (error) {
           sendErrors.push('pre-employment forms');
         }
+      }
+      if (sendPreEmploymentRequirements) {
         try {
           await sendAdditionalPreEmploymentEmail({ name, email, location, recruiter }, packages);
         } catch (error) {

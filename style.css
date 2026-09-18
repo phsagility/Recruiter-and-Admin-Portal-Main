@@ -1180,6 +1180,12 @@ main.grid {
   display: none;
 }
 
+.pre-employment-requirements-section {
+  width: calc(100% - 48px);
+  max-width: 1530px;
+  margin: 0 auto 40px;
+}
+
 .esign-modal[hidden] {
   display: none;
 }
@@ -2490,7 +2496,7 @@ section.card h2 {
 .selected-packages-card #selectedPackagesContainer {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -2809,16 +2815,16 @@ section.card h2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
+  padding: 8px 12px;
   border-radius: 10px;
   font-weight: 500;
-  font-size: 14px;
-  gap: 10px;
+  font-size: 13px;
+  gap: 8px;
   border: 2px solid;
   transition: all 0.3s ease;
   flex-shrink: 0;
   width: 100%;
-  min-height: 48px;
+  min-height: 40px;
 }
 
 .pkg-name {
@@ -2894,6 +2900,12 @@ section.card h2 {
   background: var(--pink-light);
   border-color: #f0a6b8;
   color: #b34f6c;
+}
+
+.pkg.requirements-pink {
+  background: #ffe8ee;
+  border-color: #ef8fa5;
+  color: #b52f52;
 }
 
 .pkg.yellow {
