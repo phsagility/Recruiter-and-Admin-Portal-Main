@@ -219,15 +219,6 @@
       </div>
     </div>
   </section>
-  <section class="card pre-employment-requirements-section">
-    <h2>Pre Employment Requirements</h2>
-    <p class="packages-subtitle">Select this option to send the pre-employment requirements email to your candidate.</p>
-    <label class="package-item requirements-checkbox-item">
-      <input id="preEmploymentRequirementsCheckbox" type="checkbox">
-      <div class="package-checkbox-visual"></div>
-      <div class="package-info"><span class="package-name">Pre Employment Requirements</span></div>
-    </label>
-  </section>
   <section class="card medical-forms-full">
     <h2>Medical Forms</h2>
     <p class="packages-subtitle">Select one medical form to send to your candidate.</p>
@@ -238,6 +229,15 @@
     </div>
     <div class="packages-list medical-forms-list">
     </div>
+  </section>
+  <section class="card pre-employment-requirements-inline">
+    <h3>Pre-Employment Requirement</h3>
+    <p class="packages-subtitle">Select this option to send the pre-employment requirements email to your candidate.</p>
+    <label class="package-item requirements-checkbox-item">
+      <input id="preEmploymentRequirementsCheckbox" class="package-checkbox" type="checkbox">
+      <div class="package-checkbox-visual"></div>
+      <div class="package-info"><span class="package-name">Pre Employment Requirements</span></div>
+    </label>
   </section>
   <section class="card sent-email-history-section" id="sentEmailHistory">
     <div class="card-header">
@@ -289,6 +289,12 @@
     </div>
     <div id="historyTrendCharts" class="history-trend-charts typing-results-chart is-collapsed" aria-label="History sent emails by location and account"></div>
   </section>
+  <div id="esignModal" class="esign-modal" hidden>
+    <div class="esign-modal-content">
+      <button id="closeEsign" class="esign-close" type="button" aria-label="Close eSign workspace">Close</button>
+      <iframe id="esignFrame" title="PDF eSign workspace"></iframe>
+    </div>
+  </div>
   <div class="applicant-details-results-link"><a class="export-data-btn" href="#applicantDetailsSection">Applicant Details Results</a></div>
   <section class="card applicant-details-section" id="applicantDetailsSection">
     <div class="card-header">
@@ -301,12 +307,6 @@
     <div class="applicant-details-export"><label for="applicantExportStart">From</label><input id="applicantExportStart" type="date"><label for="applicantExportEnd">End</label><input id="applicantExportEnd" type="date"><button id="exportApplicantDetailsBtn" class="export-data-btn" type="button">Export CSV</button></div>
     <p id="applicantDetailsStatus" class="history-delete-status" role="status" aria-live="polite"></p>
   </section>
-  <div id="esignModal" class="esign-modal" hidden>
-    <div class="esign-modal-content">
-      <button id="closeEsign" class="esign-close" type="button" aria-label="Close eSign workspace">Close</button>
-      <iframe id="esignFrame" title="PDF eSign workspace"></iframe>
-    </div>
-  </div>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>

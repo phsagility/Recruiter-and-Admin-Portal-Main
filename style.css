@@ -584,20 +584,28 @@ header.top {
   }
 
   .header-right-actions {
-    width: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    gap: 8px;
+    margin-left: 0;
   }
 
   .resource-menu {
-    width: 100%;
+    width: auto;
     min-width: 0;
+    flex: 0 0 auto;
   }
 
   .resource-menu summary,
   body .portal-logout-btn {
-    width: 100%;
+    width: auto;
     min-height: 36px;
     box-sizing: border-box;
     text-align: center;
+    white-space: nowrap;
   }
 
   .header-resource-nav a {
@@ -1181,6 +1189,12 @@ main.grid {
 }
 
 .pre-employment-requirements-section {
+  width: calc(100% - 48px);
+  max-width: 1530px;
+  margin: 0 auto 40px;
+}
+
+.pre-employment-requirements-inline {
   width: calc(100% - 48px);
   max-width: 1530px;
   margin: 0 auto 40px;
@@ -3732,7 +3746,7 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   }
 
   main.grid .selected-packages-card {
-    order: 5;
+    order: 6;
   }
 
   main.grid .email-queue-panel {
@@ -3750,8 +3764,19 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   body {
     display: flex;
     flex-direction: column;
-    padding-top: 140px;
+    padding-top: 0;
     padding-bottom: 20px;
+  }
+
+  header.top {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    min-height: auto;
+    z-index: auto;
+    margin-bottom: 16px;
   }
 
   main.grid {
@@ -3759,7 +3784,7 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   }
 
   main.grid > .candidate-info-card {
-    margin-top: 200px;
+    margin-top: 18px;
   }
 
   .notification-report-section {
@@ -3980,7 +4005,7 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   }
 
   .selected-packages-card {
-    order: 3;
+    order: 6;
     width: calc(100% - 32px);
     margin: 0 16px 16px;
     height: auto;
@@ -4000,10 +4025,15 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   }
 
   .medical-forms-full,
+  .pre-employment-requirements-inline,
   .history-trend-section {
     width: calc(100% - 32px);
     margin-left: 16px;
     margin-right: 16px;
+  }
+
+  body > .pre-employment-requirements-inline {
+    order: 5;
   }
 
   .email-queue-panel {
@@ -4015,6 +4045,18 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
 
   .sent-email-history-section {
     order: 3;
+    width: calc(100% - 32px);
+    margin: 0 16px 24px;
+  }
+
+  body > .applicant-details-results-link {
+    order: 9;
+    width: calc(100% - 32px);
+    margin: 0 16px 12px;
+  }
+
+  body > .applicant-details-section {
+    order: 10;
     width: calc(100% - 32px);
     margin: 0 16px 24px;
   }
@@ -4697,13 +4739,51 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
 
   .assessment-packages-full .package-item,
   .medical-forms-full .package-item {
-    width: 90%;
-    min-height: 34px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
+    min-height: 30px;
+    margin-left: 0;
+    margin-right: 0;
     padding: 4px 6px;
     line-height: 1.15;
     align-items: center;
+  }
+
+  .pre-employment-requirements-inline .package-item {
+    width: 100%;
+    min-height: 26px;
+    margin: 0;
+    padding: 4px 8px;
+    line-height: 1.15;
+    align-items: center;
+    border-width: 1px;
+    grid-template-columns: 14px minmax(0, 1fr);
+  }
+
+  .pre-employment-requirements-inline .package-item .package-name {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .pre-employment-requirements-inline .package-checkbox {
+    width: 14px !important;
+    height: 14px !important;
+    min-width: 14px;
+    min-height: 14px !important;
+    padding: 0 !important;
+  }
+
+  .pre-employment-requirements-inline h3 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    text-align: left;
+    color: var(--primary-blue);
+  }
+
+  .pre-employment-requirements-inline .packages-subtitle {
+    margin: 0 0 8px;
+    font-size: 11px;
+    line-height: 1.35;
+    text-align: left;
   }
 
   .assessment-packages-full .packages-column {
