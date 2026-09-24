@@ -26,7 +26,12 @@ function doPost(e) {
     const role = String(data.role || '').trim();
     const requestedPackage = String(data.requestedPackage || '').trim();
     const recruiter = String(data.recruiter || '').trim();
-    const packages = Array.isArray(data.packages) ? data.packages : [];
+    const packages = (Array.isArray(data.packages) ? data.packages : [])
+      .map((item) => ({
+        name: String(item && item.name || '').trim(),
+        link: String(item && item.link || '').trim()
+      }))
+      .filter((item) => item.name && /^https?:\/\//i.test(item.link));
 
     if (!name || !email || !location || !account || !accountSubprocess || !recruiter || !packages.length) {
       throw new Error('Name, email, location, account, account subprocess, recruiter, and package are required.');

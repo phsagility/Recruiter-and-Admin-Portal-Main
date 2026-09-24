@@ -5200,10 +5200,12 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
 
 .sent-email-history-section .sent-email-history-table th:nth-child(3),
 .sent-email-history-section .sent-email-history-table td:nth-child(3) {
-  width: 42px;
-  min-width: 42px;
-  max-width: 42px;
-  text-align: center;
+  width: 220px;
+  min-width: 220px;
+  max-width: 280px;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .sent-email-history-section .sent-email-history-table th:nth-child(2),
@@ -5211,6 +5213,14 @@ button:not(.send-email-btn):not(.pkg-remove):not(.history-delete-selected):not(.
   width: 82px;
   min-width: 82px;
   max-width: 82px;
+  text-align: center;
+}
+
+.sent-email-history-section .sent-email-history-table th:nth-child(4),
+.sent-email-history-section .sent-email-history-table td:nth-child(4) {
+  width: 42px;
+  min-width: 42px;
+  max-width: 42px;
   text-align: center;
 }
 

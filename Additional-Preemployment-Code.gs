@@ -40,15 +40,34 @@ function doPost(e) {
         ? ADDITIONAL_LOCATION_RECIPIENTS.Bohol
         : '';
     const selectedPackages = packages.map((item) => String(item.name || '').trim()).filter(Boolean).join(', ');
-    const subject = `Sagility Pre-employment Requirement_${name}_${location}`;
+    const locationEmail = location.indexOf('Iloilo') === 0
+      ? ADDITIONAL_LOCATION_RECIPIENTS.Iloilo
+      : location.indexOf('Bohol') === 0
+        ? ADDITIONAL_LOCATION_RECIPIENTS.Bohol
+        : 'support@sagility.com';
+    const locationAssistEmail = location.indexOf('Iloilo') === 0
+      ? ADDITIONAL_LOCATION_RECIPIENTS.Iloilo
+      : location.indexOf('Bohol') === 0
+        ? ADDITIONAL_LOCATION_RECIPIENTS.Bohol
+        : '';
+    const htmlLink = (label, url) => `<a href="${escapeHtml(url)}">${escapeHtml(label)}</a>`;
+    const submissionInstruction = `You may submit your documents through this email (${locationEmail}) for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (WD log-in here): ${WORKDAY_LINK}`;
+    const submissionInstructionHtml = `You may submit your documents through this email (${htmlLink(locationEmail, `mailto:${locationEmail}`)}) for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (${htmlLink('WD log-in here', WORKDAY_LINK)}).`;
+    const assistanceLine = locationAssistEmail
+      ? `- ${htmlLink(locationAssistEmail, `mailto:${locationAssistEmail}`)} (for ${location.indexOf('Iloilo') === 0 ? 'Iloilo Site' : 'Bohol Site'})`
+      : '';
+    const assistanceLinePlain = locationAssistEmail
+      ? `- ${locationAssistEmail} (for ${location.indexOf('Iloilo') === 0 ? 'Iloilo Site' : 'Bohol Site'})`
+      : '';
+    const subject = `Sagility Pre-employment Requirements_${name}_${location}`;
     const body = [
       `Hi ${name},`,
       '',
       'Welcome to Sagility!',
       '',
-      'To help ensure a smooth onboarding process, please prepare and submit the following pre-employment requirements:-',
+      'To help ensure a smooth onboarding process, please prepare and submit the following pre-employment requirements.',
       '',
-      `NEW HIRE PRE-EMPLOYMENT REQUIREMENT- ${NEW_HIRE_REQUIREMENT_LINK}`,
+      `NEW HIRE PRE-EMPLOYMENT REQUIREMENTS- ${NEW_HIRE_REQUIREMENT_LINK}`,
       '',
       'I. LIST OF REQUIREMENTS',
       '✅ Selfie Photo holding a govt. ID',
@@ -67,14 +86,13 @@ function doPost(e) {
       `⭐ First time Job Seekers, use this link to apply: ${NBI_FIRST_TIME_LINK}`,
       `⭐ For Online Renewal click here: ${NBI_RENEWAL_LINK}`,
       '',
-      `You may submit your documents through this email below for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (WD log-in here): ${WORKDAY_LINK}`,
+      submissionInstruction,
       '',
       'Need Assistance?',
       "If you have any questions, concerns, or clarifications, please don't hesitate to reach out. You may:",
-      '📧 Reply directly to this email (all requirements or other assistance):',
-      `- ${ADDITIONAL_LOCATION_RECIPIENTS.Iloilo} (for Iloilo Site)`,
-      `- ${ADDITIONAL_LOCATION_RECIPIENTS.Bohol} (for Bohol Site)`,
-      `💬 Connect with us through Microsoft Teams from Mondays to Fridays, 1:00 PM to 10:00 PM using this link: ${TEAMS_ASSISTANCE_LINK}`,
+      '📧 Reply directly to this email below (all requirements or assistance)',
+      assistanceLinePlain,
+      `💬 Connect with us through Microsoft Teams from Mondays to Fridays, 1:00 PM to 10:00 PM using this - ${htmlLink('link', TEAMS_ASSISTANCE_LINK)}`,
       'Our team will be happy to assist and guide you throughout your onboarding journey.',
       '',
       'To avoid delays in your onboarding and training schedule, we encourage you to submit your requirements as soon as they become available. Early submission allows our team to review and validate your documents promptly, ensuring a smooth and hassle-free onboarding experience. We appreciate your cooperation and look forward to welcoming you to Sagility!',
@@ -89,12 +107,11 @@ function doPost(e) {
       'Human Resources - Talent Acquisition'
     ].join('\n');
 
-    const htmlLink = (label, url) => `<a href="${escapeHtml(url)}">${escapeHtml(label)}</a>`;
     const htmlBody = [
       `<p>Hi <strong>${escapeHtml(name)},</strong></p>`,
       '<p><strong>Welcome to Sagility!</strong></p>',
-      '<p>To help ensure a smooth onboarding process, please prepare and submit the following pre-employment requirements:-</p>',
-      `<p><strong>NEW HIRE PRE-EMPLOYMENT REQUIREMENT</strong>- ${htmlLink('link', NEW_HIRE_REQUIREMENT_LINK)}</p>`,
+      '<p>To help ensure a smooth onboarding process, please prepare and submit the following pre-employment requirements.</p>',
+      `<p><strong>NEW HIRE PRE-EMPLOYMENT REQUIREMENTS</strong>- ${htmlLink('link', NEW_HIRE_REQUIREMENT_LINK)}</p>`,
       '<p><strong style="color:#00a99d;">I. LIST OF REQUIREMENTS</strong></p>',
       '<p>&#9989; Selfie Photo holding a govt. ID<br>' +
         `&#9989; Birth Certificate- To apply online click here &#10132; ${htmlLink('link', BIRTH_CERTIFICATE_LINK)}<br>` +
@@ -111,13 +128,12 @@ function doPost(e) {
         '&#9989; NBI Clearance- How to apply NBI click link below.<br>' +
         `&#11088; First time Job Seekers, use this link to apply &#10132; ${htmlLink('link', NBI_FIRST_TIME_LINK)}<br>` +
         `&#11088; For Online Renewal click here &#10132; ${htmlLink('link', NBI_RENEWAL_LINK)}</p>`,
-      `<p>You may submit your documents through this email thread for our initial review and validation. Once your Workday task becomes available, you will be required to upload the same documents directly to Workday (${htmlLink('WD log-in here', WORKDAY_LINK)}).</p>`,
+      `<p>${submissionInstructionHtml}</p>`,
       '<p><strong>Need Assistance?</strong><br>' +
         "If you have any questions, concerns, or clarifications, please don't hesitate to reach out. You may:<br>" +
         '&#128231; Reply directly to this email below (all requirements or assistance)<br>' +
-        `- ${htmlLink(ADDITIONAL_LOCATION_RECIPIENTS.Iloilo, `mailto:${ADDITIONAL_LOCATION_RECIPIENTS.Iloilo}`)} (for Iloilo Site)<br>` +
-        `- ${htmlLink(ADDITIONAL_LOCATION_RECIPIENTS.Bohol, `mailto:${ADDITIONAL_LOCATION_RECIPIENTS.Bohol}`)} (for Bohol Site)<br>` +
-        `&#128172; Connect with us through Microsoft Teams from Mondays to Fridays, 1:00 PM to 10:00 PM using this - ${htmlLink('link', TEAMS_ASSISTANCE_LINK)}<br>` +
+        `${assistanceLine}<br>` +
+        `&#128172; Connect with us through Microsoft Teams from Mondays to Fridays, 1:00 PM to 10:00 PM using this - ${htmlLink('link', TEAMS_ASSISTANCE_LINK)}<br><br>` +
         'Our team will be happy to assist and guide you throughout your onboarding journey.</p>',
       '<p><strong><em>To avoid delays in your onboarding and training schedule, we encourage you to submit your requirements as soon as they become available. Early submission allows our team to review and validate your documents promptly, ensuring a smooth and hassle-free onboarding experience. We appreciate your cooperation and look forward to welcoming you to Sagility!</em></strong></p>',
       '<p><em>Privacy &amp; Security Reminder: To protect your personal information, please submit your documents only through official Sagility channels such as this email thread and your Workday account once available.</em></p>',
