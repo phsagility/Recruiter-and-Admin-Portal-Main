@@ -498,7 +498,7 @@ function buildPackageColumns(entries) {
   return Array.from({ length: 3 }, (_, columnIndex) => {
     const start = columnIndex * 5;
     const items = visibleEntries.slice(start, start + 5).map((entry) =>
-      `<label class="package-item"><input type="checkbox" class="package-checkbox" data-package="${entry.name}" data-link="Packages/?pdf=${encodeURIComponent(entry.file)}"><div class="package-checkbox-visual"></div><div class="package-info"><span class="package-name">${entry.name}</span></div></label>`
+      `<label class="package-item"><input type="checkbox" class="package-checkbox" data-package="${entry.name}" data-link="Packages/index.html?pdf=${encodeURIComponent(entry.file)}"><div class="package-checkbox-visual"></div><div class="package-info"><span class="package-name">${entry.name}</span></div></label>`
     ).join('');
     if (!items) return '';
     return `<div class="packages-category package-column"><h3 class="category-title">Pre-Employment Packages ${start + 1}-${start + 5}</h3><div class="packages-list">${items}</div></div>`;
@@ -1098,7 +1098,7 @@ async function loadMedicalForms() {
         const displayName = String(form.name).trim();
         const label = document.createElement('label');
         label.className = `package-item medical-${group.key}`;
-        label.innerHTML = `<input type="checkbox" class="package-checkbox" data-package="${displayName}" data-link="Packages/?pdf=../Medical%20Forms/${encodeURIComponent(form.file)}" data-medical-file="${form.file}" data-prefill="medical" data-medical-column="${group.key}"><div class="package-checkbox-visual"></div><div class="package-info"><span class="package-name">${displayName}</span></div>`;
+        label.innerHTML = `<input type="checkbox" class="package-checkbox" data-package="${displayName}" data-link="Packages/index.html?pdf=../Medical%20Forms/${encodeURIComponent(form.file)}" data-medical-file="${form.file}" data-prefill="medical" data-medical-column="${group.key}"><div class="package-checkbox-visual"></div><div class="package-info"><span class="package-name">${displayName}</span></div>`;
         medicalFormsList.appendChild(label);
         const checkbox = label.querySelector('.package-checkbox');
         checkboxes.push(checkbox);
